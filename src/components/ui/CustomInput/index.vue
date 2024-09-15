@@ -1,13 +1,11 @@
 <template>
-  <div>
-    <router-view />
-  </div>
+  <input type="text" />
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 
 export default Vue.extend({
-  name: "App",
+  name: "CustomInput",
 });
 </script>

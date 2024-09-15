@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-view />
+    <h1>CustomLoader</h1>
   </div>
 </template>
 
@@ -8,6 +8,6 @@
 import Vue from "vue";
 
 export default Vue.extend({
-  name: "App",
+  name: "CustomLoader",
 });
 </script>
