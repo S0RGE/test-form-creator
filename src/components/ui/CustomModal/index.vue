@@ -1,6 +1,9 @@
 <template>
-  <div>
-    <h1>CustomModal</h1>
+  <div class="modal">
+    <div class="modal-info">
+      <h2>{{ title }}</h2>
+      <p>{{ text }}</p>
+    </div>
   </div>
 </template>
 
@@ -9,5 +12,38 @@ import Vue from "vue";
 
 export default Vue.extend({
   name: "CustomModal",
+  props: {
+    title: {
+      type: String,
+      default: "Modal",
+    },
+    text: {
+      type: String,
+      default: "Something important here",
+    },
+  },
 });
 </script>
+
+<style scoped>
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-info {
+  background-color: #fff;
+  padding: 3rem;
+  border-radius: 0.5rem;
+}
+</style>

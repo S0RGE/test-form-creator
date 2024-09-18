@@ -1,9 +1,10 @@
-const getFormConfig = async () => {
+import { IForm } from "./types";
+import interview from "./forms/interview";
+
+const getFormConfig = async (): Promise<IForm> => {
   return await new Promise((resolve) => {
     setTimeout(() => {
-      resolve({
-        name: "test",
-      });
+      resolve(interview);
     }, 1000);
   });
 };

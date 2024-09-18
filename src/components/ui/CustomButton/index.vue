@@ -1,8 +1,5 @@
 <template>
-  <label>
-    {{ label }}
-    <input :type="type" :required="required" />
-  </label>
+  <input :type="type" :value="value" />
 </template>
 
 <script lang="ts">
@@ -11,13 +8,9 @@ import Vue from "vue";
 export default Vue.extend({
   name: "CustomInput",
   props: {
-    label: {
+    value: {
       type: String,
       default: "Input",
-    },
-    required: {
-      type: Boolean,
-      default: false,
     },
     type: {
       type: String,
