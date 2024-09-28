@@ -3,6 +3,8 @@ const interview = {
   fields: [
     {
       label: "Введите своё ФИО",
+      tabIndex: 0,
+      name: "fio",
       input: {
         type: "text",
         required: true,
@@ -11,6 +13,8 @@ const interview = {
     },
     {
       label: "Введите Номер телефона",
+      tabIndex: 2,
+      name: "phone",
       input: {
         type: "number",
         required: true,
@@ -19,6 +23,8 @@ const interview = {
     },
     {
       label: "Введите свою Почту",
+      tabIndex: 1,
+      name: "email",
       input: {
         type: "email",
         required: true,
@@ -27,6 +33,8 @@ const interview = {
     },
     {
       label: "Введите свой возраст",
+      tabIndex: 3,
+      name: "age",
       input: {
         type: "number",
         required: true,
@@ -34,6 +42,8 @@ const interview = {
     },
     {
       label: "Введите вашу специальность",
+      tabIndex: 4,
+      name: "speciality",
       input: {
         type: "text",
         required: true,
@@ -41,6 +51,8 @@ const interview = {
     },
     {
       label: "Выберете технологии, с которыми вы работали",
+      tabIndex: 5,
+      name: "technologies",
       input: {
         type: "select",
         required: true,
@@ -58,20 +70,35 @@ const interview = {
     },
     {
       label: "Ваш срок работы",
+      tabIndex: 6,
+      name: "experience",
       input: {
         type: "number",
         required: true,
       },
     },
     {
-      label: "Ваша фотография",
+      label: "Готовы работать удаленно?",
+      tabIndex: 6,
+      name: "remote",
       input: {
-        type: "file",
+        type: "checkbox",
         required: true,
       },
     },
+    // {
+    //   label: "Ваша фотография",
+    //   tabIndex: 7,
+    //   name: "photo",
+    //   input: {
+    //     type: "file",
+    //     required: true,
+    //   },
+    // },
     {
       label: "Серия, номер",
+      tabIndex: 8,
+      name: "passport",
       input: {
         type: "number",
         required: true,
@@ -80,31 +107,25 @@ const interview = {
     },
     {
       label: "Код подразделения",
+      tabIndex: 9,
+      name: "code",
       input: {
         type: "number",
         required: true,
         mask: "999-999",
       },
     },
-    {
-      label: "Скан / Фото паспорта (1 страница)",
-      input: {
-        type: "file",
-        required: true,
-        multiple: true,
-        filetype: ["png", "jpeg", "pdf"],
-      },
-    },
-  ],
-  buttons: [
-    {
-      text: "Send",
-      type: "submit",
-    },
-    {
-      text: "Cancel",
-      type: "button",
-    },
+    // {
+    //   label: "Скан / Фото паспорта (1 страница)",
+    //   tabIndex: 10,
+    //   name: "passportPhoto",
+    //   input: {
+    //     type: "file",
+    //     required: true,
+    //     multiple: true,
+    //     filetype: ["png", "jpeg", "pdf"],
+    //   },
+    // },
   ],
 };
 

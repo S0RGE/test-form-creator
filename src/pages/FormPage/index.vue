@@ -2,7 +2,13 @@
   <div>
     <h1>FormPage</h1>
     <h2>{{ formName }}</h2>
-    <form :id="formName" class="main-form" v-if="formItems.length">
+    <form
+      @submit.prevent="onFormSubmit"
+      :id="formName"
+      ref="mainForm"
+      class="main-form"
+      v-if="formItems.length"
+    >
       <div class="form-items">
         <div
           class="form-item"
@@ -12,17 +18,13 @@
           <component
             v-bind:is="getComponentName(formItem.input.type)"
             v-bind="getComponentProps(formItem)"
+            @change="onChangeForm"
           />
         </div>
       </div>
-      <div class="form-actions" v-if="formActions.length">
-        <div
-          class="form-item"
-          v-for="formAction in formActions"
-          :key="formAction.text"
-        >
-          <CustomButton :type="formAction.type" :value="formAction.text" />
-        </div>
+      <div class="form-actions">
+        <button class="btn" @click.prevent="onFormSubmit">Отправить</button>
+        <button class="btn" @click.prevent="refreshForm">Очистить</button>
       </div>
     </form>
   </div>
@@ -40,6 +42,12 @@ import CustomButton from "@/components/ui/CustomButton/index.vue";
 
 import { getFormConfig } from "@/api";
 
+import {
+  getDataFromLocalStorage,
+  setDataToLocalStorage,
+  removeDataFromLocalStorage,
+} from "@/helpers";
+
 export default Vue.extend({
   name: "FormPage",
   components: {
@@ -55,14 +63,25 @@ export default Vue.extend({
       formItems: [] as IFormField[],
       formActions: [] as IFormButton[],
       nameToComponent: nameToComponent,
+      mainForm: {} as { [key: string]: string },
     };
   },
   methods: {
     getComponentProps(formItem: IFormField) {
-      return {
+      const componentProps = {
         ...formItem.input,
         label: formItem.label,
+        tabIndex: formItem?.tabIndex,
+        name: formItem.name,
       };
+      if (this.mainForm[formItem.name]) {
+        return {
+          ...componentProps,
+          initialValue: this.mainForm[formItem.name],
+        };
+      }
+
+      return componentProps;
     },
     getComponentName(typeName: string) {
       return (
@@ -70,19 +89,49 @@ export default Vue.extend({
         "CustomInput"
       );
     },
+    onFormSubmit() {
+      console.log("Submit");
+    },
+    onChangeForm(entries: { name: string; value: string }) {
+      if (!entries || !entries.name) return;
+      this.mainForm[entries.name] = entries.value;
+      setDataToLocalStorage("mainForm", this.mainForm);
+    },
+    refreshForm() {
+      const currentForm = this.$refs.mainForm as HTMLFormElement;
+      currentForm.reset();
+      removeDataFromLocalStorage("mainForm");
+    },
   },
   async mounted() {
     const formConfig = await getFormConfig();
     this.formName = formConfig.name;
     this.formItems = formConfig.fields;
-    this.formActions = formConfig.buttons;
-    console.log(formConfig);
+
+    const mainForm = getDataFromLocalStorage("mainForm");
+    if (mainForm) {
+      this.mainForm = mainForm;
+    }
   },
 });
 </script>
 
 <style>
+.main-form {
+  display: flex;
+  flex-direction: column;
+}
+
 .form-item {
   margin-bottom: 1rem;
+}
+
+.btn {
+  padding: 0.4rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.5rem;
 }
 </style>

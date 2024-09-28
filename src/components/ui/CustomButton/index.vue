@@ -1,5 +1,5 @@
 <template>
-  <input :type="type" :value="value" />
+  <input :type="type" :value="value" class="btn" :tabindex="tabIndex" />
 </template>
 
 <script lang="ts">
@@ -15,6 +15,10 @@ export default Vue.extend({
     type: {
       type: String,
       default: "text",
+    },
+    tabIndex: {
+      type: Number,
+      default: 100,
     },
   },
 });
