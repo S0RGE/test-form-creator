@@ -3,28 +3,29 @@ const addpost = {
   fields: [
     {
       label: "Title",
+      tabIndex: 1,
+      name: "title",
       input: {
         type: "text",
         required: true,
       },
     },
     {
-      label: "Image",
+      label: "Date",
+      tabIndex: 2,
+      name: "date",
       input: {
-        type: "file",
+        type: "text",
         required: true,
       },
     },
     {
       label: "Author",
+      tabIndex: 3,
+      name: "author",
       input: {
         type: "text",
       },
-    },
-  ],
-  buttons: [
-    {
-      text: "Create Post",
     },
   ],
 };

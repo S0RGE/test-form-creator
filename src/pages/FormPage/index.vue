@@ -27,6 +27,7 @@
         <button class="btn" @click.prevent="refreshForm">Очистить</button>
       </div>
     </form>
+    <CustomModal v-if="haveNewForm" @close="onCloseModal" v-bind="modalData" />
   </div>
 </template>
 
@@ -39,6 +40,7 @@ import CustomInput from "@/components/ui/CustomInput/index.vue";
 import CustomSelect from "@/components/ui/CustomSelect/index.vue";
 import CustomData from "@/components/ui/CustomData/index.vue";
 import CustomButton from "@/components/ui/CustomButton/index.vue";
+import CustomModal from "@/components/ui/CustomModal/index.vue";
 
 import { mapActions } from "vuex";
 
@@ -56,14 +58,18 @@ export default Vue.extend({
     CustomSelect,
     CustomData,
     CustomButton,
+    CustomModal,
   },
   data() {
     return {
-      formName: "",
-      formItems: [] as IFormField[],
       formActions: [] as IFormButton[],
       nameToComponent: nameToComponent,
       mainForm: {} as { [key: string]: string },
+      modalData: {
+        title: "Важно!",
+        message: "Получена новая форма.",
+        buttonText: "Обновить",
+      },
     };
   },
   methods: {
@@ -103,13 +109,25 @@ export default Vue.extend({
       currentForm.reset();
       removeDataFromLocalStorage("mainForm");
     },
+    onCloseModal() {
+      this.$store.dispatch("setNewFormConfig");
+    },
+  },
+  computed: {
+    formName() {
+      return this.$store.state.formConfig.name || "";
+    },
+    formItems() {
+      return this.$store.state.formConfig.fields || [];
+    },
+    haveNewForm() {
+      return this.$store.state.haveNewForm;
+    },
   },
   async mounted() {
     if (!this.$store.state.formConfig.name) {
       await this.getFormConfig();
     }
-    this.formName = this.$store.state.formConfig.name;
-    this.formItems = this.$store.state.formConfig.fields;
 
     const mainForm = getDataFromLocalStorage("mainForm");
     if (mainForm) {

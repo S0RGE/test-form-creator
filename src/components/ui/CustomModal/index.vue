@@ -3,7 +3,7 @@
     <div class="modal-info">
       <h2>{{ title }}</h2>
       <p>{{ message }}</p>
-      <button @click="$emit('close')">Close</button>
+      <button @click="$emit('close')">{{ buttonText }}</button>
     </div>
   </div>
 </template>
@@ -21,6 +21,10 @@ export default Vue.extend({
     message: {
       type: String,
       default: "Something important here",
+    },
+    buttonText: {
+      type: String,
+      default: "Закрыть",
     },
   },
 });

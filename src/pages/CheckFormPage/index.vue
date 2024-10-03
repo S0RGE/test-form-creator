@@ -80,7 +80,7 @@ export default Vue.extend({
   },
   computed: {
     formFields() {
-      return this.$store.state.formConfig.fields?.map(
+      return this.$store.getters.currentFormConfig.fields?.map(
         (item: IFormField) => item.name
       );
     },

@@ -1,10 +1,12 @@
 import { IForm } from "./types";
 import interview from "./forms/interview";
+import addpost from "./forms/addpost";
 
 export const getFormConfig = async (): Promise<IForm> => {
   return await new Promise((resolve) => {
     setTimeout(() => {
-      resolve(interview);
+      const result = randomBoolean() ? interview : addpost;
+      resolve(result);
     }, 1000);
   });
 };
