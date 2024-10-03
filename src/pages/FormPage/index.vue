@@ -40,7 +40,7 @@ import CustomSelect from "@/components/ui/CustomSelect/index.vue";
 import CustomData from "@/components/ui/CustomData/index.vue";
 import CustomButton from "@/components/ui/CustomButton/index.vue";
 
-import { getFormConfig } from "@/api";
+import { mapActions } from "vuex";
 
 import {
   getDataFromLocalStorage,
@@ -67,6 +67,7 @@ export default Vue.extend({
     };
   },
   methods: {
+    ...mapActions(["getFormConfig"]),
     getComponentProps(formItem: IFormField) {
       const componentProps = {
         ...formItem.input,
@@ -104,9 +105,11 @@ export default Vue.extend({
     },
   },
   async mounted() {
-    const formConfig = await getFormConfig();
-    this.formName = formConfig.name;
-    this.formItems = formConfig.fields;
+    if (!this.$store.state.formConfig.name) {
+      await this.getFormConfig();
+    }
+    this.formName = this.$store.state.formConfig.name;
+    this.formItems = this.$store.state.formConfig.fields;
 
     const mainForm = getDataFromLocalStorage("mainForm");
     if (mainForm) {

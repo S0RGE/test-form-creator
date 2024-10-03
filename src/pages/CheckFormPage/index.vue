@@ -2,10 +2,10 @@
   <div>
     <h1>CheckFormPage</h1>
     <div class="display-items">
-      <div class="display-item" v-for="(item, el) in mainForm" :key="el">
-        <span> {{ el }}: </span>
+      <div class="display-item" v-for="field in formFields" :key="field">
+        <span> {{ field }}: </span>
         <span>
-          {{ item }}
+          {{ mainForm[field] || "-" }}
         </span>
       </div>
     </div>
@@ -30,6 +30,7 @@ import Vue from "vue";
 import CustomModal from "@/components/ui/CustomModal/index.vue";
 
 import { getDataFromLocalStorage, removeDataFromLocalStorage } from "@/helpers";
+import { IFormField } from "@/api/types";
 import { sendForm } from "@/api";
 
 export default Vue.extend({
@@ -77,6 +78,13 @@ export default Vue.extend({
       }
     },
   },
+  computed: {
+    formFields() {
+      return this.$store.state.formConfig.fields?.map(
+        (item: IFormField) => item.name
+      );
+    },
+  },
   mounted() {
     const formData = getDataFromLocalStorage("mainForm");
     if (formData) {
@@ -87,7 +95,8 @@ export default Vue.extend({
 </script>
 
 <style>
-.display-items {
+.display-items,
+.display-actions {
   max-width: 50%;
   margin: 0 auto;
 }
@@ -95,5 +104,12 @@ export default Vue.extend({
 .display-item {
   display: flex;
   justify-content: space-between;
+}
+
+.display-actions {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 </style>

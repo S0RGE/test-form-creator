@@ -1,6 +1,5 @@
 import { IForm } from "./types";
 import interview from "./forms/interview";
-import { set } from "vue/types/umd";
 
 export const getFormConfig = async (): Promise<IForm> => {
   return await new Promise((resolve) => {
