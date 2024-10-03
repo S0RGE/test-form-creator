@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <h1>FormPage</h1>
-    <h2>{{ formName }}</h2>
+  <div class="form-page">
+    <h1>{{ formName }}</h1>
     <form
       @submit.prevent="onFormSubmit"
       :id="formName"
@@ -23,8 +22,10 @@
         </div>
       </div>
       <div class="form-actions">
-        <button class="btn" type="submit">Отправить</button>
-        <button class="btn" @click.prevent="refreshForm">Очистить</button>
+        <CustomButton class="btn">Отправить</CustomButton>
+        <CustomButton class="btn" @click.native.prevent="refreshForm"
+          >Очистить</CustomButton
+        >
       </div>
     </form>
     <CustomModal v-if="haveNewForm" @close="onCloseModal" v-bind="modalData" />
@@ -33,7 +34,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { IFormField, IFormButton } from "@/api/types";
+import { IFormField } from "@/api/types";
 import { nameToComponent } from "@/static";
 import CustomCheckbox from "@/components/ui/CustomCheckbox/index.vue";
 import CustomInput from "@/components/ui/CustomInput/index.vue";
@@ -62,7 +63,6 @@ export default Vue.extend({
   },
   data() {
     return {
-      formActions: [] as IFormButton[],
       nameToComponent: nameToComponent,
       mainForm: {} as { [key: string]: string },
       modalData: {
@@ -138,17 +138,18 @@ export default Vue.extend({
 </script>
 
 <style>
+.form-page {
+  margin-top: 2rem;
+}
+
 .main-form {
   display: flex;
   flex-direction: column;
+  padding: 2rem;
 }
 
 .form-item {
   margin-bottom: 1rem;
-}
-
-.btn {
-  padding: 0.4rem;
 }
 
 .form-actions {

@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <h1>CheckFormPage</h1>
+  <div class="check-form-page">
+    <h1>Проверьте перед отправкой</h1>
     <div class="display-items">
       <div class="display-item" v-for="field in formFields" :key="field">
-        <span> {{ field }}: </span>
-        <span>
+        <span class="field-name"> {{ field }}: </span>
+        <span class="field-value">
           {{ mainForm[field] || "-" }}
         </span>
       </div>
@@ -95,15 +95,33 @@ export default Vue.extend({
 </script>
 
 <style>
+.check-form-page h1 {
+  margin: 2rem 0;
+}
+
 .display-items,
 .display-actions {
   max-width: 50%;
   margin: 0 auto;
 }
 
+.display-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
 .display-item {
   display: flex;
   justify-content: space-between;
+}
+
+.field-name {
+  font-weight: bold;
+}
+
+.field-value {
+  font-style: italic;
 }
 
 .display-actions {

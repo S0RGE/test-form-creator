@@ -16,3 +16,20 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+h1 {
+  text-align: center;
+  text-transform: uppercase;
+}
+</style>

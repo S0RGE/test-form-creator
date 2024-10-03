@@ -71,3 +71,36 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style>
+select {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  width: 100%;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+select:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+select:disabled {
+  background-color: #e9ecef;
+  opacity: 1;
+}
+
+option {
+  padding: 0.5rem;
+}
+
+option:disabled {
+  color: #6c757d;
+}
+</style>

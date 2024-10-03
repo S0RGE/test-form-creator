@@ -1,5 +1,5 @@
 <template>
-  <label>
+  <label class="checkbox-label">
     {{ label }}
     <input
       type="checkbox"
@@ -61,3 +61,33 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style>
+input[type="checkbox"] {
+  margin-right: 0.5rem;
+}
+
+label.checkbox-label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+label.checkbox-label input {
+  flex-basis: 3rem;
+}
+
+input[type="checkbox"]:focus {
+  outline: none;
+}
+
+input[type="checkbox"]:disabled {
+  background-color: #e9ecef;
+  opacity: 1;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+</style>

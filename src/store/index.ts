@@ -41,9 +41,9 @@ export default new Vuex.Store({
         return;
       }
 
-      setTimeout(async () => {
-        this.dispatch("getFormConfig");
-      }, 10000);
+      // setTimeout(async () => {
+      //   this.dispatch("getFormConfig");
+      // }, 10000);
 
       setDataToLocalStorage("mainConfig", formConfig);
       commit("setFormConfig", formConfig);
@@ -64,7 +64,6 @@ export default new Vuex.Store({
         return state.formConfig;
       }
       const config = getDataFromLocalStorage("mainConfig");
-      console.log("🚀 ~ currentFormConfig ~ config:", config);
       if (config) {
         state.formConfig = config as IForm;
         return state.formConfig;

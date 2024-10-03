@@ -1,5 +1,7 @@
 <template>
-  <input :type="type" :value="value" class="btn" :tabindex="tabIndex" />
+  <button @click="$emit('custom-click')" class="btn" :tabindex="tabIndex">
+    <slot />
+  </button>
 </template>
 
 <script lang="ts">
@@ -23,3 +25,19 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style>
+.btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  color: #333;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #ccc;
+}
+</style>
