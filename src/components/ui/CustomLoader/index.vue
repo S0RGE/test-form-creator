@@ -1,7 +1,9 @@
 <template>
-  <div class="spinner" :style="{ width: size + 'px', height: size + 'px' }">
-    <div class="double-bounce1"></div>
-    <div class="double-bounce2"></div>
+  <div v-if="isLoading" class="loader">
+    <div class="spinner" :style="{ width: size + 'px', height: size + 'px' }">
+      <div class="double-bounce1"></div>
+      <div class="double-bounce2"></div>
+    </div>
   </div>
 </template>
 
@@ -14,10 +16,27 @@ export default {
       default: 30,
     },
   },
+  computed: {
+    isLoading() {
+      return this.$store.state.isLoading;
+    },
+  },
 };
 </script>
 
-<style scoped>
+<style>
+.loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
 .spinner {
   position: relative;
 }

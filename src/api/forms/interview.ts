@@ -37,7 +37,7 @@ const interview = {
       name: "age",
       input: {
         type: "number",
-        required: true,
+        required: false,
       },
     },
     {

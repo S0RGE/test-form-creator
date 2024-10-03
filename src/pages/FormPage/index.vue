@@ -23,7 +23,7 @@
         </div>
       </div>
       <div class="form-actions">
-        <button class="btn" @click.prevent="onFormSubmit">Отправить</button>
+        <button class="btn" type="submit">Отправить</button>
         <button class="btn" @click.prevent="refreshForm">Очистить</button>
       </div>
     </form>
@@ -90,7 +90,7 @@ export default Vue.extend({
       );
     },
     onFormSubmit() {
-      console.log("Submit");
+      this.$router.push({ name: "formCheck" });
     },
     onChangeForm(entries: { name: string; value: string }) {
       if (!entries || !entries.name) return;

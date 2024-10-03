@@ -2,7 +2,8 @@
   <div class="modal">
     <div class="modal-info">
       <h2>{{ title }}</h2>
-      <p>{{ text }}</p>
+      <p>{{ message }}</p>
+      <button @click="$emit('close')">Close</button>
     </div>
   </div>
 </template>
@@ -17,7 +18,7 @@ export default Vue.extend({
       type: String,
       default: "Modal",
     },
-    text: {
+    message: {
       type: String,
       default: "Something important here",
     },
@@ -25,7 +26,7 @@ export default Vue.extend({
 });
 </script>
 
-<style scoped>
+<style>
 .modal {
   position: fixed;
   top: 0;
