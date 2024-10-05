@@ -101,7 +101,7 @@ export default Vue.extend({
 
 .display-items,
 .display-actions {
-  max-width: 50%;
+  max-width: 40rem;
   margin: 0 auto;
 }
 
@@ -114,6 +114,8 @@ export default Vue.extend({
 .display-item {
   display: flex;
   justify-content: space-between;
+  border-bottom: 1px solid #ccc;
+  padding: 0 0.3rem;
 }
 
 .field-name {

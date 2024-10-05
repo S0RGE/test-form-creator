@@ -125,13 +125,13 @@ export default Vue.extend({
     },
   },
   async mounted() {
-    if (!this.$store.state.formConfig.name) {
-      await this.getFormConfig();
-    }
-
     const mainForm = getDataFromLocalStorage("mainForm");
     if (mainForm) {
       this.mainForm = mainForm;
+    }
+
+    if (!this.$store.state.formConfig.name) {
+      await this.getFormConfig();
     }
   },
 });
@@ -146,6 +146,9 @@ export default Vue.extend({
   display: flex;
   flex-direction: column;
   padding: 2rem;
+
+  max-width: 40rem;
+  margin: 0 auto;
 }
 
 .form-item {
