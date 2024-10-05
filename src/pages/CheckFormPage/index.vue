@@ -81,6 +81,7 @@ export default Vue.extend({
         this.setModalData({
           title: "Форма успешно отправлена!",
           message: "Спасибо за заявку!",
+          modalType: "success",
         });
       } catch (error: unknown | Error) {
         const errorMessage = (error as Error)?.message || "Что то пошло не так";

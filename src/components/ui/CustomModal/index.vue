@@ -120,4 +120,13 @@ export default defineComponent({
 .modal-error .modal-wrapper {
   border: 1px solid #fa4444;
 }
+
+/* Success */
+.modal-success .modal-title {
+  color: #4caf50;
+}
+
+.modal-success .modal-wrapper {
+  border: 1px solid #4caf50;
+}
 </style>
