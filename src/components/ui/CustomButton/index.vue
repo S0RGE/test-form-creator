@@ -1,14 +1,15 @@
 <template>
-  <button @click="$emit('custom-click')" class="btn" :tabindex="tabIndex">
+  <button @click="onClick" ref="customButton" class="btn" :tabindex="tabIndex">
     <slot />
   </button>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { defineComponent } from "vue";
 
-export default Vue.extend({
+export default defineComponent({
   name: "CustomInput",
+  emits: ["custom-click"],
   props: {
     value: {
       type: String,
@@ -21,6 +22,18 @@ export default Vue.extend({
     tabIndex: {
       type: Number,
       default: 100,
+    },
+  },
+  methods: {
+    onClick(event: Event) {
+      event.preventDefault();
+      this.$emit("custom-click", event);
+    },
+    focus() {
+      const customButton = this.$refs.customButton as HTMLButtonElement;
+      if (customButton) {
+        customButton.focus();
+      }
     },
   },
 });

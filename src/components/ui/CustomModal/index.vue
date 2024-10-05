@@ -1,23 +1,28 @@
 <template>
-  <div class="modal">
-    <div class="modal-info">
+  <div :class="['modal', `modal-${modalType}`]">
+    <div class="modal-wrapper">
       <h2 class="modal-title">{{ title }}</h2>
       <p class="modal-message">{{ message }}</p>
-      <CustomButton @click="$emit('close')">{{ buttonText }}</CustomButton>
+      <CustomButton ref="modalButton" @custom-click="onClose">{{
+        buttonText
+      }}</CustomButton>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { defineComponent } from "vue";
+import { PropType } from "vue";
 
 import CustomButton from "@/components/ui/CustomButton/index.vue";
+import type { IModalType } from "./types";
 
-export default Vue.extend({
+export default defineComponent({
   name: "CustomModal",
   components: {
     CustomButton,
   },
+  emits: ["close"],
   props: {
     title: {
       type: String,
@@ -31,6 +36,42 @@ export default Vue.extend({
       type: String,
       default: "Закрыть",
     },
+    modalType: {
+      type: String as PropType<IModalType>,
+      default: "info",
+    },
+  },
+  methods: {
+    onClose() {
+      this.$emit("close");
+    },
+    handleKeydown(event: KeyboardEvent) {
+      if (event.key === "Tab") {
+        const modalContainer = this.$el;
+        const focusableElements = modalContainer.querySelectorAll(
+          "button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])"
+        );
+        const currentIndex = Array.prototype.indexOf.call(
+          focusableElements,
+          document.activeElement
+        );
+        const nextIndex = (currentIndex + 1) % focusableElements.length;
+        if (document.activeElement !== modalContainer) {
+          (focusableElements[nextIndex] as HTMLElement).focus();
+          event.preventDefault();
+        }
+      }
+    },
+  },
+  mounted() {
+    const modalButton = this.$refs.modalButton as HTMLButtonElement;
+    if (modalButton) {
+      modalButton.focus();
+    }
+    document.addEventListener("keydown", this.handleKeydown);
+  },
+  beforeUnmount() {
+    document.removeEventListener("keydown", this.handleKeydown);
   },
 });
 </script>
@@ -51,7 +92,7 @@ export default Vue.extend({
   justify-content: center;
 }
 
-.modal-info {
+.modal-wrapper {
   background-color: #fff;
   padding: 1rem;
   border-radius: 0.5rem;
@@ -69,5 +110,14 @@ export default Vue.extend({
 
 .modal-message {
   font-size: 1.1rem;
+}
+
+/* Error */
+.modal-error .modal-title {
+  color: #fa4444;
+}
+
+.modal-error .modal-wrapper {
+  border: 1px solid #fa4444;
 }
 </style>

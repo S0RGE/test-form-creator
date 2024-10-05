@@ -73,7 +73,7 @@ export default Vue.extend({
     };
   },
   methods: {
-    ...mapActions(["getFormConfig"]),
+    ...mapActions(["getFormConfig", "setLoading"]),
     getComponentProps(formItem: IFormField) {
       const componentProps = {
         ...formItem.input,
@@ -125,6 +125,8 @@ export default Vue.extend({
     },
   },
   async mounted() {
+    this.setLoading(true);
+
     const mainForm = getDataFromLocalStorage("mainForm");
     if (mainForm) {
       this.mainForm = mainForm;
@@ -133,6 +135,8 @@ export default Vue.extend({
     if (!this.$store.state.formConfig.name) {
       await this.getFormConfig();
     }
+
+    this.setLoading(false);
   },
 });
 </script>

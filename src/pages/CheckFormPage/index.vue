@@ -16,11 +16,7 @@
       </button>
       <button class="btn" @click="onRefreshForm">Заполнить заного</button>
     </div>
-    <CustomModal
-      v-if="modalData"
-      v-bind="modalData"
-      @close="modalData = null"
-    />
+    <CustomModal v-if="modalData" v-bind="modalData" @close="onModalClose" />
   </div>
 </template>
 
@@ -32,6 +28,8 @@ import CustomModal from "@/components/ui/CustomModal/index.vue";
 import { getDataFromLocalStorage, removeDataFromLocalStorage } from "@/helpers";
 import { IFormField } from "@/api/types";
 import { sendForm } from "@/api";
+import { mapActions } from "vuex";
+import { IModalType } from "@/components/ui/CustomModal/types";
 
 export default Vue.extend({
   name: "CheckFormPage",
@@ -41,27 +39,44 @@ export default Vue.extend({
   data() {
     return {
       mainForm: {} as { [key: string]: string },
-      modalData: null as { title: string; message: string } | null,
+      modalData: null as {
+        title: string;
+        message: string;
+        modalType?: IModalType;
+      } | null,
     };
   },
   methods: {
+    ...mapActions(["setLoading"]),
     onRefreshForm() {
       removeDataFromLocalStorage("mainForm");
       this.$router.push({ name: "form" });
     },
-    setModalData({ title, message }: { title: string; message: string }) {
+    setModalData({
+      title,
+      message,
+      modalType,
+    }: {
+      title: string;
+      message: string;
+      modalType?: IModalType;
+    }) {
       this.modalData = {
         title,
         message,
+        modalType: modalType || "info",
       };
 
       setTimeout(() => {
         this.modalData = null;
       }, 3000);
     },
+    onModalClose() {
+      this.modalData = null;
+    },
     async onSendForm() {
       try {
-        this.$store.commit("setLoading", true);
+        this.setLoading(true);
         await sendForm(this.mainForm);
         this.setModalData({
           title: "Форма успешно отправлена!",
@@ -72,9 +87,10 @@ export default Vue.extend({
         this.setModalData({
           title: "Возникла ошибка!",
           message: errorMessage,
+          modalType: "error",
         });
       } finally {
-        this.$store.commit("setLoading", false);
+        this.setLoading(false);
       }
     },
   },
@@ -86,10 +102,12 @@ export default Vue.extend({
     },
   },
   mounted() {
+    this.setLoading(true);
     const formData = getDataFromLocalStorage("mainForm");
     if (formData) {
       this.mainForm = formData;
     }
+    this.setLoading(false);
   },
 });
 </script>
