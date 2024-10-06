@@ -43,7 +43,7 @@ import CustomData from "@/components/ui/CustomData/index.vue";
 import CustomButton from "@/components/ui/CustomButton/index.vue";
 import CustomModal from "@/components/ui/CustomModal/index.vue";
 
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
 import {
   getDataFromLocalStorage,
@@ -129,7 +129,7 @@ export default defineComponent({
       return this.$store.state.haveNewForm;
     },
   },
-  async mounted() {
+  async created() {
     this.setLoading(true);
 
     const mainForm = getDataFromLocalStorage("mainForm");

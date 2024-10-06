@@ -106,6 +106,7 @@ export default defineComponent({
 .modal-title {
   font-size: 1.3rem;
   font-weight: bold;
+  text-align: center;
 }
 
 .modal-message {
@@ -128,5 +129,14 @@ export default defineComponent({
 
 .modal-success .modal-wrapper {
   border: 1px solid #4caf50;
+}
+
+/* Warning */
+.modal-warning .modal-title {
+  color: #ff9800;
+}
+
+.modal-warning .modal-wrapper {
+  border: 1px solid #ff9800;
 }
 </style>

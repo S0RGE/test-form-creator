@@ -7,9 +7,6 @@
       :tabindex="tabIndex"
       :placeholder="placeholder"
       class="custom-input"
-      :class="{
-        touched: touched,
-      }"
       v-model="currentValue"
       @input="
         $emit('change', {
@@ -27,14 +24,6 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "CustomInput",
   props: {
-    isError: {
-      type: Boolean,
-      default: false,
-    },
-    touched: {
-      type: Boolean,
-      default: false,
-    },
     name: {
       type: String,
       required: true,
@@ -108,9 +97,5 @@ label {
 
 .custom-input::placeholder {
   color: #6c757d;
-}
-
-.custom-input:invalid.touched {
-  border-color: #dc3545;
 }
 </style>
