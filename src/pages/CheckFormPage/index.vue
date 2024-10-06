@@ -21,17 +21,19 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { defineComponent } from "vue";
+import { mapActions, mapGetters } from "vuex";
 
 import CustomModal from "@/components/ui/CustomModal/index.vue";
 
-import { getDataFromLocalStorage, removeDataFromLocalStorage } from "@/helpers";
-import { IFormField } from "@/api/types";
 import { sendForm } from "@/api";
-import { mapActions } from "vuex";
+
+import { getDataFromLocalStorage, removeDataFromLocalStorage } from "@/helpers";
+
+import { IFormField } from "@/api/types";
 import { IModalType } from "@/components/ui/CustomModal/types";
 
-export default Vue.extend({
+export default defineComponent({
   name: "CheckFormPage",
   components: {
     CustomModal,
@@ -47,7 +49,7 @@ export default Vue.extend({
     };
   },
   methods: {
-    ...mapActions(["setLoading"]),
+    ...mapActions({ setLoading: "setLoading" }),
     onRefreshForm() {
       removeDataFromLocalStorage("mainForm");
       this.$router.push({ name: "form" });
@@ -96,9 +98,13 @@ export default Vue.extend({
     },
   },
   computed: {
+    ...mapGetters({ currentFormConfigFields: "currentFormConfigFields" }),
     formFields() {
-      return this.$store.getters.currentFormConfig.fields?.map(
-        (item: IFormField) => item.name
+      if (!this.currentFormConfigFields || !this.currentFormConfigFields.length)
+        return [];
+      // TODO: fix this
+      return this.$store.getters.currentFormConfigFields.map(
+        (field: IFormField) => field.name
       );
     },
   },

@@ -4,7 +4,7 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 import { getFormConfig } from "@/api";
-import { IForm } from "@/api/types";
+import { IForm, IFormField } from "@/api/types";
 import { getDataFromLocalStorage, setDataToLocalStorage } from "@/helpers";
 
 export default new Vuex.Store({
@@ -69,6 +69,16 @@ export default new Vuex.Store({
         return state.formConfig;
       }
       return null;
+    },
+    currentFormConfigFields(state): IFormField[] {
+      if (state.formConfig.fields) return state?.formConfig?.fields;
+
+      const config = getDataFromLocalStorage("mainConfig");
+      if (config) {
+        state.formConfig = config as IForm;
+        return state.formConfig.fields;
+      }
+      return [] as IFormField[];
     },
   },
 });

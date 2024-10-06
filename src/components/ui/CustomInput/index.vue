@@ -5,6 +5,11 @@
       :type="type"
       :required="required"
       :tabindex="tabIndex"
+      :placeholder="placeholder"
+      class="custom-input"
+      :class="{
+        touched: touched,
+      }"
       v-model="currentValue"
       @input="
         $emit('change', {
@@ -17,11 +22,19 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { defineComponent } from "vue";
 
-export default Vue.extend({
+export default defineComponent({
   name: "CustomInput",
   props: {
+    isError: {
+      type: Boolean,
+      default: false,
+    },
+    touched: {
+      type: Boolean,
+      default: false,
+    },
     name: {
       type: String,
       required: true,
@@ -46,6 +59,10 @@ export default Vue.extend({
       type: String,
       default: "text",
     },
+    placeholder: {
+      type: String,
+      default: "",
+    },
   },
   data() {
     return {
@@ -66,7 +83,7 @@ export default Vue.extend({
 </script>
 
 <style>
-input {
+.custom-input {
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 0.25rem;
@@ -79,13 +96,21 @@ label {
   margin-bottom: 0.5rem;
 }
 
-input:focus {
+.custom-input:focus {
   outline: none;
   border-color: #007bff;
 }
 
-input:disabled {
+.custom-input:disabled {
   background-color: #e9ecef;
   opacity: 1;
+}
+
+.custom-input::placeholder {
+  color: #6c757d;
+}
+
+.custom-input:invalid.touched {
+  border-color: #dc3545;
 }
 </style>

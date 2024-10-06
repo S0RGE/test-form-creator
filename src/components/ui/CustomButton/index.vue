@@ -1,11 +1,19 @@
 <template>
-  <button @click="onClick" ref="customButton" class="btn" :tabindex="tabIndex">
+  <button
+    @click="onClick"
+    :type="type"
+    ref="customButton"
+    class="btn"
+    :tabindex="tabIndex"
+  >
     <slot />
   </button>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import type { IButtonType } from "./types";
+import { PropType } from "vue";
 
 export default defineComponent({
   name: "CustomInput",
@@ -16,8 +24,8 @@ export default defineComponent({
       default: "Input",
     },
     type: {
-      type: String,
-      default: "text",
+      type: String as PropType<IButtonType>,
+      default: "button",
     },
     tabIndex: {
       type: Number,
@@ -26,7 +34,6 @@ export default defineComponent({
   },
   methods: {
     onClick(event: Event) {
-      event.preventDefault();
       this.$emit("custom-click", event);
     },
     focus() {

@@ -22,7 +22,7 @@
         </div>
       </div>
       <div class="form-actions">
-        <CustomButton class="btn">Отправить</CustomButton>
+        <CustomButton class="btn" type="submit">Отправить</CustomButton>
         <CustomButton class="btn" @click.native.prevent="refreshForm"
           >Очистить</CustomButton
         >
@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { defineComponent } from "vue";
 import { IFormField } from "@/api/types";
 import { nameToComponent } from "@/static";
 import CustomCheckbox from "@/components/ui/CustomCheckbox/index.vue";
@@ -43,7 +43,7 @@ import CustomData from "@/components/ui/CustomData/index.vue";
 import CustomButton from "@/components/ui/CustomButton/index.vue";
 import CustomModal from "@/components/ui/CustomModal/index.vue";
 
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 import {
   getDataFromLocalStorage,
@@ -51,7 +51,7 @@ import {
   removeDataFromLocalStorage,
 } from "@/helpers";
 
-export default Vue.extend({
+export default defineComponent({
   name: "FormPage",
   components: {
     CustomCheckbox,
@@ -73,7 +73,7 @@ export default Vue.extend({
     };
   },
   methods: {
-    ...mapActions(["getFormConfig", "setLoading"]),
+    ...mapActions({ getFormConfig: "getFormConfig", setLoading: "setLoading" }),
     getComponentProps(formItem: IFormField) {
       const componentProps = {
         ...formItem.input,
@@ -81,6 +81,7 @@ export default Vue.extend({
         tabIndex: formItem?.tabIndex,
         name: formItem.name,
       };
+
       if (this.mainForm[formItem.name]) {
         return {
           ...componentProps,
@@ -97,7 +98,11 @@ export default Vue.extend({
       );
     },
     onFormSubmit() {
-      this.$router.push({ name: "formCheck" });
+      const currentForm = this.$refs.mainForm as HTMLFormElement;
+
+      if (currentForm.checkValidity()) {
+        this.$router.push({ name: "formCheck" });
+      }
     },
     onChangeForm(entries: { name: string; value: string }) {
       if (!entries || !entries.name) return;
