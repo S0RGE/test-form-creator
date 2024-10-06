@@ -11,8 +11,11 @@ export const getFormConfig = async (): Promise<IForm> => {
   });
 };
 
-export const sendForm = async (obj: any): Promise<boolean> => {
+export const sendForm = async (
+  form: Record<string, string>
+): Promise<boolean> => {
   const isCorrect = randomBoolean();
+  console.log("Sending form", form);
   return await new Promise((resolve, reject) => {
     if (isCorrect) {
       setTimeout(() => {
